@@ -13,7 +13,7 @@ status: stable
 # _Vault Index — dataLayer Unleashed
 
 Stato del vault. Aggiornare ad ogni sessione di lavoro significativa.
-Ultima modifica: **29 maggio 2026** (v1.1 — completamento 01_Ecommerce)
+Ultima modifica: **29 maggio 2026** (v1.2 — vault completo, tutti gli stub risolti)
 
 ---
 
@@ -133,10 +133,10 @@ status: stable                  # stable | draft | review | deprecated
 | Root (index, moc, glossario) | 5 | ✅ stable |
 | 00_Init | 1 | ✅ stable |
 | 01_Ecommerce | 11 | ✅ stable |
-| 02_User | 3 | 🔲 stub |
-| 03_Content | 3 | 🔲 stub |
-| 04_Lead | 1 | 🔲 stub |
-| 05_Engagement | 3 | 🔲 stub |
+| 02_User | 3 | ✅ stable |
+| 03_Content | 3 | ✅ stable |
+| 04_Lead | 1 | ✅ stable |
+| 05_Engagement | 3 | ✅ stable |
 | 09_Templates | 1 | ✅ stable |
 
 ---
@@ -154,6 +154,6 @@ status: stable                  # stable | draft | review | deprecated
 ## TODO / Prossimi passi
 
 - [x] Completare note stub 01_Ecommerce (11 eventi)
-- [ ] Completare note stub 02_User, 03_Content, 04_Lead, 05_Engagement
+- [x] Completare note stub 02_User, 03_Content, 04_Lead, 05_Engagement
 - [ ] Validare push su implementazione reale (Shopify o Magento)
 - [ ] Integrare con Tracking Masterpiece come sezione operativa
