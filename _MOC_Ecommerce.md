@@ -38,7 +38,8 @@ Checkout
   └── [[add_payment_info]]   → selezione metodo pagamento
 
 Conversione
-  └── [[purchase]]           → ordine completato
+  ├── [[purchase]]           → ordine completato
+  └── [[add_to_wishlist]]    → aggiunta a wishlist
 
 Post-vendita
   └── [[refund]]             → rimborso totale o parziale

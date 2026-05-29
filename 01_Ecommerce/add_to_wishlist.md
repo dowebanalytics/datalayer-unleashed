@@ -2,7 +2,7 @@
 title: add_to_wishlist — Aggiunta a wishlist
 type: note
 tags:
-  - engagement
+  - ecommerce
   - wishlist
   - datalayer
   - ga4
@@ -11,7 +11,7 @@ related:
   - add_to_cart
   - view_item
 ga4_event: add_to_wishlist
-categoria: engagement
+categoria: ecommerce
 piattaforme: [GA4, Meta CAPI, TikTok]
 data_creazione: 2026-05-29
 last_updated: 2026-05-29

@@ -56,6 +56,7 @@ dataLayer Unleashed/
 │   ├── add_shipping_info.md
 │   ├── add_payment_info.md
 │   ├── purchase.md
+│   ├── add_to_wishlist.md
 │   └── refund.md
 │
 ├── 02_User/
@@ -73,7 +74,6 @@ dataLayer Unleashed/
 │
 ├── 05_Engagement/
 │   ├── newsletter_subscribe.md
-│   ├── add_to_wishlist.md
 │   └── coupon_apply.md
 │
 └── 09_Templates/
@@ -132,11 +132,11 @@ status: stable                  # stable | draft | review | deprecated
 |---------|-------|--------|
 | Root (index, moc, glossario) | 5 | ✅ stable |
 | 00_Init | 1 | ✅ stable |
-| 01_Ecommerce | 11 | ✅ stable |
+| 01_Ecommerce | 12 | ✅ stable |
 | 02_User | 3 | ✅ stable |
 | 03_Content | 3 | ✅ stable |
 | 04_Lead | 1 | ✅ stable |
-| 05_Engagement | 3 | ✅ stable |
+| 05_Engagement | 2 | ✅ stable |
 | 09_Templates | 1 | ✅ stable |
 
 ---

@@ -51,6 +51,7 @@ Ogni file è un push pronto all'uso, documentato con parametri, tipi, esempi e n
 - [[add_shipping_info]] — Selezione metodo spedizione
 - [[add_payment_info]] — Selezione metodo pagamento
 - [[purchase]] — Ordine completato
+- [[add_to_wishlist]] — Aggiunta a wishlist
 - [[refund]] — Rimborso (totale o parziale)
 
 ---
@@ -80,7 +81,6 @@ Ogni file è un push pronto all'uso, documentato con parametri, tipi, esempi e n
 ## 05 — Engagement
 
 - [[newsletter_subscribe]] — Iscrizione newsletter
-- [[add_to_wishlist]] — Aggiunta a wishlist
 - [[coupon_apply]] — Applicazione coupon
 
 ---
