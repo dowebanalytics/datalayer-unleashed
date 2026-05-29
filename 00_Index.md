@@ -80,7 +80,7 @@ Ogni file è un push pronto all'uso, documentato con parametri, tipi, esempi e n
 ## 05 — Engagement
 
 - [[newsletter_subscribe]] — Iscrizione newsletter
-- [[wishlist_add]] — Aggiunta a wishlist
+- [[add_to_wishlist]] — Aggiunta a wishlist
 - [[coupon_apply]] — Applicazione coupon
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: wishlist_add — Aggiunta a wishlist
+title: add_to_wishlist — Aggiunta a wishlist
 type: note
 tags:
   - engagement
@@ -10,7 +10,7 @@ related:
   - _Glossario
   - add_to_cart
   - view_item
-ga4_event: null
+ga4_event: add_to_wishlist
 categoria: engagement
 piattaforme: [GA4, Meta CAPI, TikTok]
 data_creazione: 2026-05-29
@@ -21,9 +21,9 @@ fonti:
 status: stable
 ---
 
-# wishlist_add — Aggiunta a wishlist
+# add_to_wishlist — Aggiunta a wishlist
 
-Evento custom (non recommended GA4) pushato quando l'utente aggiunge un prodotto alla wishlist
+Recommended event GA4 pushato quando l'utente aggiunge un prodotto alla wishlist
 o lista dei desideri. Può avvenire dalla PDP, dalla pagina categoria o da qualsiasi contesto
 che espone il pulsante wishlist.
 Utile per costruire audience di interesse prodotto e analizzare l'intenzione d'acquisto.
@@ -37,7 +37,7 @@ window.dataLayer = window.dataLayer || [];
 window.dataLayer.push({ ecommerce: null }); // reset obbligatorio (oggetto ecommerce presente)
 
 window.dataLayer.push({
-  event: 'wishlist_add',
+  event: 'add_to_wishlist',
   ecommerce: {
     currency: 'EUR',
     value:    89.90,  // prezzo unitario del prodotto aggiunto
@@ -86,9 +86,9 @@ window.dataLayer.push({
 
 | Piattaforma | Tag GTM | Trigger | Note |
 |-------------|---------|---------|------|
-| GA4 | GA4 Event — wishlist_add | Custom Event: `wishlist_add` | Audience "interessati ma non acquirenti" |
-| Meta Pixel / CAPI | Meta AddToWishlist | Custom Event: `wishlist_add` | Standard event Meta, `value` + `currency` obbligatori |
-| TikTok Pixel | TikTok AddToWishlist | Custom Event: `wishlist_add` | |
+| GA4 | GA4 Event — add_to_wishlist | Custom Event: `add_to_wishlist` | Audience "interessati ma non acquirenti" |
+| Meta Pixel / CAPI | Meta AddToWishlist | Custom Event: `add_to_wishlist` | Standard event Meta, `value` + `currency` obbligatori |
+| TikTok Pixel | TikTok AddToWishlist | Custom Event: `add_to_wishlist` | |
 
 ---
 

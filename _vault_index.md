@@ -73,7 +73,7 @@ dataLayer Unleashed/
 │
 ├── 05_Engagement/
 │   ├── newsletter_subscribe.md
-│   ├── wishlist_add.md
+│   ├── add_to_wishlist.md
 │   └── coupon_apply.md
 │
 └── 09_Templates/
