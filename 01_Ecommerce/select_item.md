@@ -9,23 +9,26 @@ tags:
 related:
   - _MOC_Ecommerce
   - _Glossario
+  - view_item_list
+  - view_item
 ga4_event: select_item
 categoria: ecommerce
-piattaforme: [GA4, Google Ads, Meta CAPI, TikTok]
+piattaforme: [GA4]
 data_creazione: 2026-05-29
 last_updated: 2026-05-29
 source_verified_on: 2026-05-29
 fonti:
   - https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_item
-status: draft
+status: stable
 ---
 
 # select_item — Click su prodotto in lista
 
-Push quando l'utente clicca su un prodotto da una lista (categoria, search, related products). Precede view_item.
+Push eseguito quando l'utente clicca su un prodotto all'interno di una lista (categoria, ricerca,
+prodotti correlati, slider). Precede sempre `view_item` nel funnel.
+Permette di misurare il CTR di ogni prodotto per posizione nella lista.
 
 > **Nota:** eseguire sempre `dataLayer.push({ ecommerce: null })` prima di questo push.
-> Vedere [[_MOC_Ecommerce]] per le regole comuni a tutti gli eventi ecommerce.
 
 ---
 
@@ -38,47 +41,79 @@ window.dataLayer.push({ ecommerce: null }); // reset obbligatorio
 window.dataLayer.push({
   event: 'select_item',
   ecommerce: {
-    // Parametri chiave: item_list_id, item_list_name, items[]
+    item_list_id:   'category_abbigliamento',
+    item_list_name: 'Abbigliamento',
+    items: [
+      {
+        item_id:        'SKU_001',
+        item_name:      'Sneakers running',
+        item_brand:     'Acme',
+        item_category:  'Calzature',
+        item_category2: 'Sport',
+        item_list_id:   'category_abbigliamento',
+        item_list_name: 'Abbigliamento',
+        index:          0,     // posizione del prodotto nella lista (0-based)
+        price:          89.90,
+        quantity:       1
+      }
+    ]
   }
 });
 ```
 
+> `items[]` contiene **un solo prodotto** — quello su cui l'utente ha cliccato.
+
 ---
 
-## Parametri
-
-> 🔲 **Stub** — da completare nella prossima sessione di lavoro.
+## Parametri — evento
 
 | Parametro | Descrizione | Tipo | Obbligatorio | Esempio |
 |-----------|-------------|------|:------------:|---------|
-| `currency` | Valuta ISO 4217 | stringa | ✅ | `"EUR"` |
-| `value` | Valore totale | numero | ✅ | `89.90` |
-| `items[]` | Array prodotti | array | ✅ | vedi sotto |
-| `items[].item_id` | SKU prodotto | stringa | ✅ | `"SKU_001"` |
-| `items[].item_name` | Nome prodotto | stringa | ✅ | `"Sneakers running"` |
-| `items[].price` | Prezzo unitario | numero | ✅ | `89.90` |
-| `items[].quantity` | Quantità | numero | ✅ | `1` |
+| `item_list_id` | ID slug della lista di provenienza | stringa | ⬜ | `"category_abbigliamento"` |
+| `item_list_name` | Nome lista di provenienza | stringa | ⬜ | `"Abbigliamento"` |
+| `items[]` | Array con il singolo prodotto cliccato | array | ✅ | vedi sotto |
+
+## Parametri — items[] (singolo prodotto)
+
+| Parametro | Descrizione | Tipo | Obbligatorio | Esempio |
+|-----------|-------------|------|:------------:|---------|
+| `item_id` | SKU univoco | stringa | ✅ | `"SKU_001"` |
+| `item_name` | Nome prodotto | stringa | ✅ | `"Sneakers running"` |
+| `item_brand` | Brand | stringa | ⬜ | `"Acme"` |
+| `item_category` | Categoria L1 | stringa | ⬜ | `"Calzature"` |
+| `item_list_id` | ID lista (ripetuto a livello item) | stringa | ⬜ | `"category_abbigliamento"` |
+| `item_list_name` | Nome lista (ripetuto a livello item) | stringa | ⬜ | `"Abbigliamento"` |
+| `index` | Posizione nella lista (0-based) | numero | ⬜ | `0` |
+| `price` | Prezzo unitario | numero | ⬜ | `89.90` |
+| `quantity` | Quantità | numero | ⬜ | `1` |
 
 ---
 
 ## Piattaforme
 
-| Piattaforma | Tag GTM | Trigger |
-|-------------|---------|---------|
-| GA4 | GA4 Event — select_item | Custom Event: `select_item` |
-| Google Ads | Conversion Tracking | Custom Event: `select_item` |
-| Meta Pixel / CAPI | Meta Pixel / CAPI tag | Custom Event: `select_item` |
+| Piattaforma | Tag GTM | Trigger | Note |
+|-------------|---------|---------|------|
+| GA4 | GA4 Event — select_item | Custom Event: `select_item` | Abilita CTR analysis per posizione |
 
 ---
 
 ## Note GDPR
 
-- Richiede `analytics_storage: granted` per GA4
-- Richiede `ad_storage: granted` per Google Ads e Meta
-- Nessun campo PII diretto
+- Nessun campo PII
+- Richiede `analytics_storage: granted`
+
+---
+
+## Errori Comuni
+
+| Errore | Conseguenza | Fix |
+|--------|-------------|-----|
+| `items[]` con più prodotti | GA4 registra click multipli | Un solo item — quello cliccato |
+| `index` omesso | Impossibile analizzare performance per posizione | Sempre valorizzare con posizione 0-based |
+| `item_list_id` diverso da quello usato in `view_item_list` | Rottura del funnel lista→click | Usare lo stesso ID slug in entrambi gli eventi |
 
 ---
 
 ## Riferimenti
 
-- GA4 Event Reference: https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_item
+- GA4 select_item: https://developers.google.com/analytics/devguides/collection/ga4/reference/events#select_item

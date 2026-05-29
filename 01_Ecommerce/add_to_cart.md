@@ -9,6 +9,9 @@ tags:
 related:
   - _MOC_Ecommerce
   - _Glossario
+  - view_item
+  - remove_from_cart
+  - view_cart
 ga4_event: add_to_cart
 categoria: ecommerce
 piattaforme: [GA4, Google Ads, Meta CAPI, TikTok]
@@ -17,15 +20,15 @@ last_updated: 2026-05-29
 source_verified_on: 2026-05-29
 fonti:
   - https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart
-status: draft
+status: stable
 ---
 
 # add_to_cart — Aggiunta al carrello
 
-Push quando l'utente aggiunge uno o più prodotti al carrello da qualsiasi contesto (PDP, listing, quickview).
+Push eseguito quando l'utente aggiunge uno o più prodotti al carrello, da qualsiasi contesto:
+PDP, pagina categoria (quick add), quickview, prodotti correlati, pagina carrello (modifica quantità).
 
 > **Nota:** eseguire sempre `dataLayer.push({ ecommerce: null })` prima di questo push.
-> Vedere [[_MOC_Ecommerce]] per le regole comuni a tutti gli eventi ecommerce.
 
 ---
 
@@ -38,47 +41,78 @@ window.dataLayer.push({ ecommerce: null }); // reset obbligatorio
 window.dataLayer.push({
   event: 'add_to_cart',
   ecommerce: {
-    // Parametri chiave: currency, value, items[]
+    currency: 'EUR',
+    value:    89.90,  // prezzo unitario × quantità aggiunta
+    items: [
+      {
+        item_id:        'SKU_001',
+        item_name:      'Sneakers running',
+        item_brand:     'Acme',
+        item_category:  'Calzature',
+        item_category2: 'Sport',
+        item_variant:   'Nero / 42',
+        price:          89.90,
+        quantity:       1   // quantità aggiunta in questa sessione, non totale carrello
+      }
+    ]
   }
 });
 ```
 
 ---
 
-## Parametri
-
-> 🔲 **Stub** — da completare nella prossima sessione di lavoro.
+## Parametri — evento
 
 | Parametro | Descrizione | Tipo | Obbligatorio | Esempio |
 |-----------|-------------|------|:------------:|---------|
-| `currency` | Valuta ISO 4217 | stringa | ✅ | `"EUR"` |
-| `value` | Valore totale | numero | ✅ | `89.90` |
-| `items[]` | Array prodotti | array | ✅ | vedi sotto |
-| `items[].item_id` | SKU prodotto | stringa | ✅ | `"SKU_001"` |
-| `items[].item_name` | Nome prodotto | stringa | ✅ | `"Sneakers running"` |
-| `items[].price` | Prezzo unitario | numero | ✅ | `89.90` |
-| `items[].quantity` | Quantità | numero | ✅ | `1` |
+| `currency` | Valuta (ISO 4217 uppercase) | stringa | ✅ | `"EUR"` |
+| `value` | Prezzo unitario × quantità aggiunta | numero | ✅ | `89.90` |
+| `items[]` | Array prodotti aggiunti | array | ✅ | vedi sotto |
+
+## Parametri — items[]
+
+| Parametro | Descrizione | Tipo | Obbligatorio | Esempio |
+|-----------|-------------|------|:------------:|---------|
+| `item_id` | SKU univoco | stringa | ✅ | `"SKU_001"` |
+| `item_name` | Nome prodotto | stringa | ✅ | `"Sneakers running"` |
+| `item_brand` | Brand | stringa | ⬜ | `"Acme"` |
+| `item_category` | Categoria L1 | stringa | ⬜ | `"Calzature"` |
+| `item_variant` | Variante selezionata | stringa | ⬜ | `"Nero / 42"` |
+| `price` | Prezzo unitario | numero | ✅ | `89.90` |
+| `quantity` | Quantità aggiunta (non totale carrello) | numero | ✅ | `1` |
 
 ---
 
 ## Piattaforme
 
-| Piattaforma | Tag GTM | Trigger |
-|-------------|---------|---------|
-| GA4 | GA4 Event — add_to_cart | Custom Event: `add_to_cart` |
-| Google Ads | Conversion Tracking | Custom Event: `add_to_cart` |
-| Meta Pixel / CAPI | Meta Pixel / CAPI tag | Custom Event: `add_to_cart` |
+| Piattaforma | Tag GTM | Trigger | Note |
+|-------------|---------|---------|------|
+| GA4 | GA4 Event — add_to_cart | Custom Event: `add_to_cart` | Metrica Add to carts nel funnel |
+| Google Ads | Dynamic Remarketing | Custom Event: `add_to_cart` | Audience "Abandoned cart" |
+| Meta Pixel / CAPI | Meta AddToCart | Custom Event: `add_to_cart` | `value` + `currency` obbligatori |
+| TikTok Pixel | TikTok AddToCart | Custom Event: `add_to_cart` | |
 
 ---
 
 ## Note GDPR
 
+- Nessun campo PII
 - Richiede `analytics_storage: granted` per GA4
-- Richiede `ad_storage: granted` per Google Ads e Meta
-- Nessun campo PII diretto
+- Richiede `ad_storage: granted` per remarketing
+
+---
+
+## Errori Comuni
+
+| Errore | Conseguenza | Fix |
+|--------|-------------|-----|
+| `quantity` = quantità totale nel carrello invece di quella aggiunta | `add_to_cart` conta più unità del reale | Passare solo la quantità dell'aggiunta corrente |
+| `value` = totale carrello invece di prezzo×quantità aggiunta | Revenue di add_to_cart gonfiata | `value` = `price * quantity` per questo push |
+| Push mancante nel contesto quickview o categoria | Dati add_to_cart parziali | Verificare tutti i punti di ingresso al carrello nel sito |
+| `item_variant` omesso | Impossibile analizzare add_to_cart per variante | Valorizzare con variante selezionata al momento dell'aggiunta |
 
 ---
 
 ## Riferimenti
 
-- GA4 Event Reference: https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart
+- GA4 add_to_cart: https://developers.google.com/analytics/devguides/collection/ga4/reference/events#add_to_cart
